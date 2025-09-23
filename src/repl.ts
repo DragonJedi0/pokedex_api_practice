@@ -21,10 +21,12 @@ export function startREPL() {
     rl.prompt(true); // preserveCursor = true
     rl.on('line', (input) => {
         const command = cleanInput(input);
-        if (command.length != 0){
-            console.log(`Your command was: ${command[0]}`);
+        if (command.length === 0){
             rl.prompt();
+            return;
         }
+
+        console.log(`Your command was: ${command[0]}`);
         rl.prompt();
     });
 }
