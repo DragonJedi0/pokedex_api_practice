@@ -18,12 +18,13 @@ export function startREPL() {
         prompt: "Pokedex > ",
     });
 
-    rl.prompt();
-    rl.on("line", cleanInput);
-    // if (!rl.input){
-    //     rl.prompt();
-    // } else {
-    //     rl.output = `Your command was: ${rl.input[0]}`;
-    //     rl.prompt();
-    // }
+    rl.prompt(true); // preserveCursor = true
+    rl.on('line', (input) => {
+        const command = cleanInput(input);
+        if (command.length != 0){
+            console.log(`Your command was: ${command[0]}`);
+            rl.prompt();
+        }
+        rl.prompt();
+    });
 }
