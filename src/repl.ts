@@ -1,3 +1,5 @@
+import { createInterface } from "node:readline";
+
 export function cleanInput(val: string): string[]{
     let words: string[] = [];
     const input = val.toLowerCase().trim().split(" ");
@@ -7,4 +9,21 @@ export function cleanInput(val: string): string[]{
         }
     }
     return words;
+}
+
+export function startREPL() {
+    const rl = createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        prompt: "Pokedex > ",
+    });
+
+    rl.prompt();
+    rl.on("line", cleanInput);
+    // if (!rl.input){
+    //     rl.prompt();
+    // } else {
+    //     rl.output = `Your command was: ${rl.input[0]}`;
+    //     rl.prompt();
+    // }
 }
