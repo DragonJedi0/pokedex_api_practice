@@ -1,16 +1,19 @@
 import { createInterface, type Interface } from "readline";
-import { cleanInput } from "./repl.js";
 import { getCommands } from "./commands.js";
+import { PokeAPI } from "./pokeapi.js";
 
 export type CLICommand = {
     name: string;
     description: string;
-    callback: (state: State) => void;
+    callback: (state: State) => Promise<void>;
 };
 
 export type State = {
     readline: Interface;
     commands: Record<string, CLICommand>;
+    pokeAPI: PokeAPI;
+    prevLocationsURL: string,
+    nextLocationsURL: string,
 }
 
 export function initState(): State{
@@ -21,6 +24,9 @@ export function initState(): State{
             prompt: "Pokedex > ",
         }),
         commands: getCommands(),
+        pokeAPI: new PokeAPI(),
+        prevLocationsURL: "",
+        nextLocationsURL: "",
     }
 
     state.readline.prompt(true); // preserveCursor = true

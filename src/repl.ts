@@ -13,7 +13,7 @@ export function cleanInput(val: string): string[]{
     return words;
 }
 
-export function startREPL() {
+export async function startREPL() {
     const state = initState();
     state.readline.on('line', (input) => {
         const words = cleanInput(input);
