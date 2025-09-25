@@ -12,8 +12,8 @@ export type State = {
     readline: Interface;
     commands: Record<string, CLICommand>;
     pokeAPI: PokeAPI;
-    prevLocationsURL: string,
-    nextLocationsURL: string,
+    nextLocationsURL: string | null,
+    prevLocationsURL: string | null,
 }
 
 export function initState(): State{
@@ -25,8 +25,8 @@ export function initState(): State{
         }),
         commands: getCommands(),
         pokeAPI: new PokeAPI(),
-        prevLocationsURL: "",
-        nextLocationsURL: "",
+        nextLocationsURL: null,
+        prevLocationsURL: null,
     }
 
     state.readline.prompt(true); // preserveCursor = true

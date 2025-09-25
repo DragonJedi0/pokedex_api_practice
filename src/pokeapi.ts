@@ -3,7 +3,7 @@ export class PokeAPI {
 
     constructor() {}
 
-    async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
+    async fetchLocations(pageURL?: string | null): Promise<ShallowLocations> {
         //Determine which URL to use
         const url = pageURL || `${PokeAPI.baseURL}/location-area`;
 
@@ -20,7 +20,7 @@ export class PokeAPI {
             const data = await response.json();
 
             // Return the data (automatically wrapped in a Promise because of 'async')
-            return data;
+            return data as ShallowLocations;
 
         } catch (err){
             // Handle both network errors and parsing errors
@@ -38,7 +38,7 @@ export class PokeAPI {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
-            return data;
+            return data as Location;
         } catch (err) {
             const error = err as Error;
             throw new Error(`Failed to fetch location: ${error.message}`);
