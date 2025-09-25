@@ -1,6 +1,4 @@
-import { createInterface } from "node:readline";
-import { getCommands } from "./commands.js";
-import { initState } from "./state.js";
+import type { State } from "./state.js";
 
 export function cleanInput(val: string): string[]{
     let words: string[] = [];
@@ -13,8 +11,7 @@ export function cleanInput(val: string): string[]{
     return words;
 }
 
-export function startREPL() {
-    const state = initState();
+export function startREPL(state: State) {
     state.readline.on('line', async (input) => {
         const words = cleanInput(input);
         const cmd = words[0];

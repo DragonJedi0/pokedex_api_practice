@@ -1,7 +1,7 @@
 import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
-import { commandMap } from "./command_map.js";
-import { commandMapBack } from "./command_mapb.js";
+import { commandMapForward } from "./command_map.js";
+import { commandMapBack } from "./command_map.js";
 
 import type { CLICommand } from "./state.js";
 
@@ -19,8 +19,8 @@ export function getCommands(): Record<string, CLICommand> {
         },
         map: {
             name: "map",
-            description: "Displays list of areas in PokeAPI",
-            callback: commandMap,
+            description: "Displays next list of areas in PokeAPI",
+            callback: commandMapForward,
         },
         mapb: {
             name: "mapb",

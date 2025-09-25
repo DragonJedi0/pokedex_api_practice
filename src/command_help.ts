@@ -6,4 +6,5 @@ export async function commandHelp(state: State): Promise<void>{
     for (const command in state.commands){
         console.log(`${state.commands[command].name}: ${state.commands[command].description}`);
     }
+    console.log();
 }
