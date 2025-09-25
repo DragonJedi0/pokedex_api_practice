@@ -1,8 +1,13 @@
 import { State } from "./state.js";
 
-export async function commandMap(state: State): Promise<void> {
+export async function commandMapBack(state: State): Promise<void> {
+    if (!state.prevLocationsURL){
+        console.log("You're on the first page.");
+        return;
+    }
+
     try{
-        const locations = await state.pokeAPI.fetchLocations(state.nextLocationsURL);
+        const locations = await state.pokeAPI.fetchLocations(state.prevLocationsURL);
         for (const location of locations.results){
             console.log(`${location.name}`)
         }

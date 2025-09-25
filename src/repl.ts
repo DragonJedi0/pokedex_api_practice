@@ -13,9 +13,9 @@ export function cleanInput(val: string): string[]{
     return words;
 }
 
-export async function startREPL() {
+export function startREPL() {
     const state = initState();
-    state.readline.on('line', (input) => {
+    state.readline.on('line', async (input) => {
         const words = cleanInput(input);
         const cmd = words[0];
         if (words.length === 0){
@@ -31,7 +31,7 @@ export async function startREPL() {
             return;
         }
         try {
-            command.callback(state);
+            await command.callback(state);
         } catch (err) {
             const e = err as Error
             console.log(e.message);
