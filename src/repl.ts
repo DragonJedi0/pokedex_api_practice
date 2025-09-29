@@ -1,25 +1,19 @@
 import type { State } from "./state.js";
 
 export function cleanInput(val: string): string[]{
-    let words: string[] = [];
-    const input = val.toLowerCase().trim().split(" ");
-    for (const i in input) {
-        if (input[i] != '') {
-            words.push(input[i]);
-        }
-    }
-    return words;
+    if(!val) return [];
+    return val.toLowerCase().trim().split(/\s+/).filter(Boolean);
 }
 
 export function startREPL(state: State) {
     state.readline.on('line', async (input) => {
         const words = cleanInput(input);
-        const cmd = words[0];
         if (words.length === 0){
             state.readline.prompt();
             return;
         }
 
+        const [cmd, ...args] = words;
         const command = state.commands[cmd];
 
         if (!command){
@@ -28,7 +22,7 @@ export function startREPL(state: State) {
             return;
         }
         try {
-            await command.callback(state);
+            await command.callback(state, ...args);
         } catch (err) {
             const e = err as Error
             console.log(e.message);

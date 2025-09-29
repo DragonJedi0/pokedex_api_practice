@@ -53,6 +53,9 @@ export class PokeAPI {
 
         try {
             const response = await fetch(url);
+            if (response.status === 404) {
+                throw new Error("Not a valid area.\nPlease use `map` or `mapb` to list valid areas");
+            }
             if (!response.ok){
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

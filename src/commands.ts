@@ -1,4 +1,5 @@
 import { commandExit } from "./command_exit.js";
+import { commandExplore } from "./command_explore.js";
 import { commandHelp } from "./command_help.js";
 import { commandMapForward } from "./command_map.js";
 import { commandMapBack } from "./command_map.js";
@@ -26,6 +27,11 @@ export function getCommands(): Record<string, CLICommand> {
             name: "mapb",
             description: "Displays previous list of areas in PokeAPI",
             callback: commandMapBack,
+        },
+        explore: {
+            name: "explore",
+            description: "Shows a list of possible Pokemon in selected Area.\n         Usage: explore <area_name>",
+            callback: commandExplore,
         },
         // other commands
     };
