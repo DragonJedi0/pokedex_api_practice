@@ -15,12 +15,12 @@ export async function commandInpect(state: State, ...args: string[]): Promise<vo
         console.log(`Height: ${pokemon.height}`);
         console.log(`Weight: ${pokemon.weight}`);
         console.log(`Stats:`);
-        for (const s of pokemon.stats){
-            console.log(`  -${s.stat.name}: ${s.base_stat}`);
+        for (const stat of pokemon.stats){
+            console.log(`  -${stat.stat.name}: ${stat.base_stat}`);
         }
         console.log(`Types:`);
-        for (const t of pokemon.types){
-            console.log(` - ${t.type.name}`);
+        for (const typeInfo of pokemon.types){
+            console.log(` - ${typeInfo.type.name}`);
         }
         console.log();
     } catch (err) {

@@ -15,7 +15,8 @@ export type State = {
     pokeAPI: PokeAPI;
     nextLocationsURL: string | null,
     prevLocationsURL: string | null,
-    pokedex: Record<string, Pokemon | null>,
+    pokedex: Record<string, Pokemon>,
+    pokecount: Record<string, number>,
     playerExp: number,
 }
 
@@ -30,7 +31,8 @@ export function initState(): State{
         pokeAPI: new PokeAPI(),
         nextLocationsURL: null,
         prevLocationsURL: null,
-        pokedex: { "null": null },
+        pokedex: {},
+        pokecount: {},
         playerExp: 50,
     }
 
