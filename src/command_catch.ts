@@ -7,7 +7,7 @@ export async function commandCatch(state: State, ...args: string[]): Promise<voi
         }
         const name = args.length > 1 ? args.join("-") : args[0];
         const pokemon = await state.pokeAPI.fetchPokemon(name);
-        console.log(`Throwing a Pokeball at ${name}`);
+        console.log(`Throwing a Pokeball at ${name}...`);
         if(Math.random() + state.playerExp >= pokemon.base_experience){
             console.log(`${name} was caught!`);
             state.pokedex[pokemon.name] = pokemon;
