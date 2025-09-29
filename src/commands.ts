@@ -1,3 +1,4 @@
+import { commandCatch } from "./command_catch.js";
 import { commandExit } from "./command_exit.js";
 import { commandExplore } from "./command_explore.js";
 import { commandHelp } from "./command_help.js";
@@ -33,6 +34,11 @@ export function getCommands(): Record<string, CLICommand> {
             description: "Shows a list of possible Pokemon in selected Area.\n         Usage: explore <area_name>",
             callback: commandExplore,
         },
+        catch: {
+            name: "catch",
+            description: "Attempt to catch Pokemon\n       Usage: catch `pokemon_name`",
+            callback: commandCatch,
+        }
         // other commands
     };
 }

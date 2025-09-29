@@ -46,10 +46,7 @@ export class PokeAPI {
     async fetchLocation(locationName: string): Promise<Location> {
         const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
         const isCached = this.cache.get(url);
-
-        if(isCached){
-            return isCached;
-        }
+        if(isCached) return isCached;
 
         try {
             const response = await fetch(url);
@@ -65,6 +62,27 @@ export class PokeAPI {
         } catch (err) {
             const error = err as Error;
             throw new Error(`Failed to fetch location: ${error.message}`);
+        }
+    }
+
+    async fetchPokemon(pokemonName: string): Promise<Pokemon> {
+        const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}`;
+        const isCached = this.cache.get(url);
+        if(isCached) return isCached;
+
+        try {
+            const response = await fetch(url);
+            if (response.status === 404){
+                throw new Error("Not a valid Pokemon name.");
+            }if (!response.ok){
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            this.cache.add(url, data as Pokemon);
+            return data as Pokemon;
+        } catch (err) {
+            const error = err as Error;
+            throw new Error(`Failed to fetch Pokemon: ${error.message}`);
         }
     }
 }
@@ -131,3 +149,171 @@ export type Location = {
         }[],
     }[],
 };
+
+export type Pokemon = {
+    id: number,
+    name: string,
+    base_experience: number,
+    height: number,
+    is_default: boolean,
+    order: number,
+    weight: number,
+    abilites: {
+        is_hidden: boolean,
+        slot: number,
+        ability: {
+            name: string,
+            url: string,
+        }
+    }[],
+    forms: {
+        name: string,
+        url: string,
+    }[],
+    game_indices: {
+        game_index: number,
+        version: {
+            name: string,
+            url: string,
+        }
+    }[],
+    held_items: {
+        item: {
+            name: string,
+            url: string,
+        },
+        version_details: {
+            rarity: number,
+            version: {
+                name: string,
+                url: string,
+            }
+        }[]
+    }[],
+    location_area_encounters: string,
+    moves: {
+        move: {
+            name: string,
+            url: string,
+        },
+        version_group_details: {
+            level_learned_at: number,
+            version_group: {
+                name: string,
+                url: string,
+            },
+            move_learn_method: {
+                name: string,
+                url: string,
+            },
+            order: number
+        }[]
+    }[],
+    past_types: {
+        generation: {
+            name: string,
+            url: string,
+        },
+        types: {
+            slot: number,
+            type: {
+                name: string,
+                url: string,
+            }
+        }[]
+    }[],
+    past_abilites: {
+        generation: {
+            name: string,
+            url: string,
+        },
+        abilites: {
+            is_hidden: boolean,
+            slot: number,
+            ability: Ability | null,
+        }[]
+    }[],
+    sprites: {
+
+    },
+    cries: {
+        latest: string,
+        legacy: string,
+    },
+    species: {
+        name: string,
+        url: string,
+    },
+    stats: {
+        base_stat: number,
+        effort: number,
+        stat: {
+            name: string,
+            url: string,
+        }
+    }[],
+    types: {
+        slot: number,
+        type: {
+            name: string,
+            url: string,
+        }
+    }[],
+}
+
+export type Ability = {
+    id: number,
+    name: string,
+    is_main_series: boolean,
+    generation: {
+        name: string,
+        url: string,
+        names: {
+            name: string,
+            language: {
+                name: string,
+                url: string,
+            }
+        }[],
+        effect_entries: {
+            effect: string,
+            short_effect: string,
+            language: {
+                name: string,
+                url: string,
+            }
+        }[],
+        effect_changes: {
+            version_group: {
+                name: string,
+                url: string,
+            },
+            effect_entries: {
+                effect: string,
+                language: {
+                    name: string,
+                    url: string,
+                }
+            }
+        }[],
+        flavor_text_entries: {
+            flavor_text: string,
+            language: {
+                name: string,
+                url: string,
+            },
+            version_group: {
+                name: string,
+                url: string,
+            }
+        }[],
+        pokemon: {
+            is_hidden: boolean,
+            slot: number,
+            pokemon: {
+                name: string,
+                url: string,
+            }
+        }[]
+    } 
+}
